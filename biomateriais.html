@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biomateriais — A Ciência dos Materiais</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --preto:    #1A1A1A;
+      --verde:    #3D6B4F;
+      --branco:   #FFFFFF;
+      --cinza-f:  #F5F5F5;
+      --cinza-m:  #888888;
+      --cinza-b:  #DADADA;
+      --linha:    1px solid var(--cinza-b);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--branco);
+      color: var(--preto);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--branco);
+      border-bottom: var(--linha);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.01em;
+      color: var(--preto);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cinza-m);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--preto); }
+
+    /* ── HERO ── */
+    .hero {
+      padding-top: 60px;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      border-bottom: var(--linha);
+    }
+
+    .hero-text {
+      padding: 80px 64px 80px 48px;
+      border-right: var(--linha);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--verde);
+      margin-bottom: 28px;
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      line-height: 1.1;
+      color: var(--preto);
+      margin-bottom: 32px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--verde);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: #444;
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: var(--linha);
+      padding-top: 36px;
+    }
+
+    .stat + .stat { border-left: var(--linha); padding-left: 28px; }
+
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--preto);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--cinza-m);
+    }
+
+    /* Molécula SVG hero */
+    .hero-visual {
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cinza-f);
+      height: 100%;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    /* ── SEÇÕES GENÉRICAS ── */
+    section { border-bottom: var(--linha); }
+
+    .section-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 96px 48px;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cinza-m);
+      padding-top: 8px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.2;
+    }
+
+    /* ── O QUE SÃO ── */
+    .definicao-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .def-col { padding: 0 48px 0 0; }
+    .def-col + .def-col { border-left: var(--linha); padding: 0 0 0 48px; }
+
+    .def-col p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #444;
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    /* ── TIPOS (cards planos) ── */
+    .tipos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .tipo-card {
+      padding: 40px 36px;
+      border-right: var(--linha);
+    }
+
+    .tipo-card:last-child { border-right: none; }
+
+    .tipo-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 24px;
+      color: var(--verde);
+    }
+
+    .tipo-nome {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .tipo-desc {
+      font-size: 0.9rem;
+      color: #555;
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .tipo-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--verde);
+      font-weight: 600;
+    }
+
+    /* ── APLICAÇÕES ── */
+    .aplicacoes-lista {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .aplicacao-item {
+      padding: 36px 0;
+      border-bottom: var(--linha);
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .aplicacao-item:nth-child(odd) { padding-right: 48px; border-right: var(--linha); }
+    .aplicacao-item:nth-child(even) { padding-left: 48px; }
+    .aplicacao-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    .aplic-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--cinza-b);
+      line-height: 1;
+    }
+
+    .aplic-nome {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--preto);
+    }
+
+    .aplic-desc {
+      font-size: 0.88rem;
+      color: #666;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── PROPRIEDADES ── */
+    .propriedades-bg { background: var(--cinza-f); }
+
+    .props-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .prop-item {
+      padding: 32px 28px;
+      border-right: var(--linha);
+    }
+
+    .prop-item:last-child { border-right: none; }
+
+    .prop-titulo {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+      color: var(--preto);
+    }
+
+    .prop-texto {
+      font-size: 0.82rem;
+      color: #666;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── DESAFIOS ── */
+    .desafios-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .desafios-intro {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--verde);
+      line-height: 1.4;
+    }
+
+    .desafios-lista { list-style: none; }
+
+    .desafios-lista li {
+      padding: 20px 0;
+      border-bottom: var(--linha);
+      display: flex;
+      gap: 20px;
+      align-items: start;
+      font-size: 0.95rem;
+      color: #444;
+      font-weight: 300;
+    }
+
+    .desafios-lista li::before {
+      content: '—';
+      color: var(--verde);
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── FUTURO ── */
+    .futuro-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+
+    .futuro-item {
+      padding: 48px;
+      border-right: var(--linha);
+      border-bottom: var(--linha);
+    }
+
+    .futuro-item:nth-child(even) { border-right: none; }
+    .futuro-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    .futuro-titulo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 14px;
+    }
+
+    .futuro-texto {
+      font-size: 0.9rem;
+      color: #555;
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    /* ── RODAPÉ ── */
+    footer {
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--preto);
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--cinza-m);
+    }
+
+    /* ── RESPONSIVO ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero-text { padding: 64px 24px; border-right: none; }
+      .section-inner { padding: 64px 24px; }
+      .section-header { grid-template-columns: 1fr; gap: 16px; }
+      .definicao-grid { grid-template-columns: 1fr; }
+      .def-col + .def-col { border-left: none; border-top: var(--linha); padding: 32px 0 0 0; margin-top: 32px; }
+      .tipos-grid { grid-template-columns: 1fr; }
+      .tipo-card { border-right: none; border-bottom: var(--linha); }
+      .aplicacoes-lista { grid-template-columns: 1fr; }
+      .aplicacao-item:nth-child(odd), .aplicacao-item:nth-child(even) { padding: 28px 0; border-right: none; border-bottom: var(--linha); }
+      .aplicacao-item:last-child { border-bottom: none; }
+      .props-grid { grid-template-columns: 1fr 1fr; }
+      .prop-item:nth-child(2n) { border-right: none; }
+      .desafios-row { grid-template-columns: 1fr; gap: 32px; }
+      .futuro-grid { grid-template-columns: 1fr; }
+      .futuro-item { border-right: none; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Biomateriais</a>
+  <ul class="nav-links">
+    <li><a href="#tipos">Tipos</a></li>
+    <li><a href="#aplicacoes">Aplicações</a></li>
+    <li><a href="#desafios">Desafios</a></li>
+    <li><a href="#futuro">Futuro</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Ciência dos Materiais</p>
+    <h1 class="hero-title">Materiais que<br>dialogam com<br><em>a vida</em></h1>
+    <p class="hero-desc">
+      Biomateriais são substâncias projetadas para interagir com sistemas biológicos, 
+      seja para fins terapêuticos, diagnósticos ou na engenharia de tecidos. 
+      A fronteira entre matéria inerte e vida viva nunca foi tão tênue.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">$250B</div>
+        <div class="stat-label">mercado global estimado 2030</div>
+      </div>
+      <div class="stat" style="padding-left:28px">
+        <div class="stat-num">+15%</div>
+        <div class="stat-label">crescimento anual projetado</div>
+      </div>
+      <div class="stat" style="padding-left:28px">
+        <div class="stat-num">60+</div>
+        <div class="stat-label">anos de pesquisa aplicada</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <!-- Molécula estilizada: assinatura visual da página -->
+    <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Ligações (linhas) -->
+      <line x1="240" y1="240" x2="140" y2="160" stroke="#3D6B4F" stroke-width="1.5"/>
+      <line x1="240" y1="240" x2="340" y2="160" stroke="#3D6B4F" stroke-width="1.5"/>
+      <line x1="240" y1="240" x2="240" y2="340" stroke="#3D6B4F" stroke-width="1.5"/>
+      <line x1="140" y1="160" x2="80"  y2="200" stroke="#DADADA" stroke-width="1.5"/>
+      <line x1="140" y1="160" x2="140" y2="80"  stroke="#DADADA" stroke-width="1.5"/>
+      <line x1="340" y1="160" x2="400" y2="200" stroke="#DADADA" stroke-width="1.5"/>
+      <line x1="340" y1="160" x2="340" y2="80"  stroke="#DADADA" stroke-width="1.5"/>
+      <line x1="240" y1="340" x2="160" y2="400" stroke="#DADADA" stroke-width="1.5"/>
+      <line x1="240" y1="340" x2="320" y2="400" stroke="#DADADA" stroke-width="1.5"/>
+      <!-- Nós externos (cinza claro) -->
+      <circle cx="80"  cy="200" r="10" fill="none" stroke="#DADADA" stroke-width="1.5"/>
+      <circle cx="140" cy="80"  r="10" fill="none" stroke="#DADADA" stroke-width="1.5"/>
+      <circle cx="400" cy="200" r="10" fill="none" stroke="#DADADA" stroke-width="1.5"/>
+      <circle cx="340" cy="80"  r="10" fill="none" stroke="#DADADA" stroke-width="1.5"/>
+      <circle cx="160" cy="400" r="10" fill="none" stroke="#DADADA" stroke-width="1.5"/>
+      <circle cx="320" cy="400" r="10" fill="none" stroke="#DADADA" stroke-width="1.5"/>
+      <!-- Nós secundários (verde claro) -->
+      <circle cx="140" cy="160" r="16" fill="none" stroke="#3D6B4F" stroke-width="1.5"/>
+      <circle cx="340" cy="160" r="16" fill="none" stroke="#3D6B4F" stroke-width="1.5"/>
+      <circle cx="240" cy="340" r="16" fill="none" stroke="#3D6B4F" stroke-width="1.5"/>
+      <!-- Nó central -->
+      <circle cx="240" cy="240" r="28" fill="#3D6B4F"/>
+      <circle cx="240" cy="240" r="18" fill="#F5F5F5"/>
+      <!-- Label central -->
+      <text x="240" y="246" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#3D6B4F" font-weight="600" letter-spacing="0.05em">Bio</text>
+    </svg>
+  </div>
+</section>
+
+<!-- O QUE SÃO -->
+<section id="definicao">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">Definição</span>
+      <h2 class="section-title">O que são biomateriais?</h2>
+    </div>
+    <div class="definicao-grid">
+      <div class="def-col">
+        <p>
+          Um biomaterial é qualquer substância — natural ou sintética — que interage com 
+          componentes biológicos de forma controlada, sem causar respostas imunológicas 
+          indesejadas. A definição foi formalizada em 1987 pelo Consenso de Chester: 
+          <em>"uma substância não viável utilizada em um dispositivo médico, destinada 
+          a interagir com sistemas biológicos"</em>.
+        </p>
+        <p>
+          O conceito evoluiu consideravelmente desde então. Hoje, biomateriais de 
+          terceira geração são projetados não apenas para tolerar o corpo, mas para 
+          estimulá-lo ativamente — induzindo regeneração celular, liberando fármacos 
+          em resposta a estímulos fisiológicos ou até mesmo se degradando de forma 
+          programada.
+        </p>
+      </div>
+      <div class="def-col">
+        <p>
+          O critério central que distingue um biomaterial de qualquer outro material 
+          é a <strong>biocompatibilidade</strong>: a capacidade de executar sua função 
+          com uma resposta adequada do hospedeiro, em uma aplicação específica. 
+          Isso inclui não ser tóxico, não ser carcinogênico, não provocar inflamação 
+          crônica e, quando necessário, ser biodegradável.
+        </p>
+        <p>
+          A ciência dos biomateriais é intrinsecamente multidisciplinar — ela é filha 
+          da química, da biologia celular, da engenharia mecânica e da medicina clínica. 
+          Nenhuma dessas áreas, isoladamente, seria capaz de resolver os problemas 
+          que biomateriais enfrentam no corpo humano.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOS -->
+<section id="tipos">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">Classificação</span>
+      <h2 class="section-title">Principais classes de biomateriais</h2>
+    </div>
+  </div>
+  <div class="tipos-grid">
+    <div class="tipo-card">
+      <svg class="tipo-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="14"/>
+        <path d="M20 6 L20 34 M6 20 L34 20" stroke-linecap="round"/>
+      </svg>
+      <h3 class="tipo-nome">Metais e Ligas</h3>
+      <p class="tipo-desc">
+        Titânio, aço inoxidável e liga cobalto-cromo são os mais utilizados. 
+        Oferecem resistência mecânica superior, ideais para implantes ortopédicos, 
+        próteses dentárias e stents cardiovasculares. A osseointegração do titânio 
+        é um dos fenômenos mais estudados da bioengenharia.
+      </p>
+      <span class="tipo-tag">Alta resistência mecânica</span>
+    </div>
+    <div class="tipo-card">
+      <svg class="tipo-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="8" width="24" height="24" rx="2"/>
+        <path d="M8 20 L32 20 M20 8 L20 32"/>
+      </svg>
+      <h3 class="tipo-nome">Cerâmicas Bioativas</h3>
+      <p class="tipo-desc">
+        Hidroxiapatita e fosfato tricálcico mimetizam a composição mineral do osso. 
+        São utilizadas em enxertos ósseos, revestimentos de implantes dentários e 
+        scaffolds para engenharia tecidual. Possuem excelente biocompatibilidade 
+        mas são frágeis sob cargas de impacto.
+      </p>
+      <span class="tipo-tag">Mimetismo ósseo</span>
+    </div>
+    <div class="tipo-card">
+      <svg class="tipo-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 30 C10 30 15 10 20 20 C25 30 30 10 30 10"/>
+        <circle cx="10" cy="30" r="2" fill="currentColor" stroke="none"/>
+        <circle cx="30" cy="10" r="2" fill="currentColor" stroke="none"/>
+      </svg>
+      <h3 class="tipo-nome">Polímeros</h3>
+      <p class="tipo-desc">
+        Dos hidrogéis biodegradáveis ao PTFE (teflon) permanente, polímeros são 
+        a classe mais versátil. Incluem PLA, PCL e PLGA para sistemas de liberação 
+        controlada de fármacos, além de poliuretanos e silicones para próteses 
+        moles e dispositivos de longa duração.
+      </p>
+      <span class="tipo-tag">Versatilidade máxima</span>
+    </div>
+  </div>
+  <div class="tipos-grid" style="border-top: var(--linha);">
+    <div class="tipo-card">
+      <svg class="tipo-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 8 L32 26 L8 26 Z"/>
+        <circle cx="20" cy="26" r="5"/>
+      </svg>
+      <h3 class="tipo-nome">Compósitos</h3>
+      <p class="tipo-desc">
+        Combinações de dois ou mais materiais de classes distintas. O osso natural 
+        é em si um compósito de colágeno (polímero) e hidroxiapatita (cerâmica). 
+        Materiais compósitos biomédicos replicam essa arquitetura para atingir 
+        propriedades impossíveis com um único material.
+      </p>
+      <span class="tipo-tag">Propriedades sinérgicas</span>
+    </div>
+    <div class="tipo-card">
+      <svg class="tipo-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="12"/>
+        <circle cx="20" cy="20" r="5"/>
+        <line x1="20" y1="8" x2="20" y2="4"/>
+        <line x1="20" y1="32" x2="20" y2="36"/>
+        <line x1="8"  y1="20" x2="4"  y2="20"/>
+        <line x1="32" y1="20" x2="36" y2="20"/>
+      </svg>
+      <h3 class="tipo-nome">Biomateriais Naturais</h3>
+      <p class="tipo-desc">
+        Colágeno, quitosana, ácido hialurônico, fibrina e seda de aranha são 
+        fontes de biomateriais com biocompatibilidade inata. São amplamente 
+        usados em scaffolds para engenharia de tecidos, coberturas de feridas 
+        e sistemas de entrega de genes e proteínas terapêuticas.
+      </p>
+      <span class="tipo-tag">Biocompatibilidade inata</span>
+    </div>
+    <div class="tipo-card">
+      <svg class="tipo-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6"  y="16" width="12" height="12" rx="1"/>
+        <rect x="22" y="12" width="12" height="16" rx="1"/>
+        <line x1="18" y1="22" x2="22" y2="22"/>
+      </svg>
+      <h3 class="tipo-nome">Nanobiomateriais</h3>
+      <p class="tipo-desc">
+        Nanopartículas, nanotubos de carbono e nanocompósitos operam na escala 
+        das moléculas biológicas. Permitem entrega intracelular de fármacos, 
+        diagnóstico por imagem de alta resolução e interação direta com proteínas 
+        e ácidos nucleicos. O campo cresce exponencialmente desde os anos 2000.
+      </p>
+      <span class="tipo-tag">Escala molecular</span>
+    </div>
+  </div>
+</section>
+
+<!-- APLICAÇÕES -->
+<section id="aplicacoes">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">Aplicações</span>
+      <h2 class="section-title">Onde biomateriais estão presentes</h2>
+    </div>
+    <div class="aplicacoes-lista">
+      <div class="aplicacao-item">
+        <span class="aplic-num">01</span>
+        <div>
+          <div class="aplic-nome">Implantes Ortopédicos</div>
+          <p class="aplic-desc">Próteses de quadril, joelho e coluna vertebral. O titânio permite osseointegração direta, eliminando cimentos ósseos e aumentando a longevidade dos implantes para 20–30 anos.</p>
+        </div>
+      </div>
+      <div class="aplicacao-item">
+        <span class="aplic-num">02</span>
+        <div>
+          <div class="aplic-nome">Dispositivos Cardiovasculares</div>
+          <p class="aplic-desc">Stents coronários, válvulas cardíacas artificiais e enxertos vasculares. O desafio central é evitar trombose sem anticoagulação crônica — um problema ainda em aberto.</p>
+        </div>
+      </div>
+      <div class="aplicacao-item">
+        <span class="aplic-num">03</span>
+        <div>
+          <div class="aplic-nome">Odontologia Restauradora</div>
+          <p class="aplic-desc">Implantes osseointegrados, enxertos ósseos, resinas compostas e cimentos bioativos. É uma das áreas com maior volume de pesquisa clínica em biomateriais do mundo.</p>
+        </div>
+      </div>
+      <div class="aplicacao-item">
+        <span class="aplic-num">04</span>
+        <div>
+          <div class="aplic-nome">Engenharia de Tecidos</div>
+          <p class="aplic-desc">Scaffolds tridimensionais semeados com células-tronco para regenerar cartilagem, pele, osso e, experimentalmente, órgãos completos como traqueia e bexiga.</p>
+        </div>
+      </div>
+      <div class="aplicacao-item">
+        <span class="aplic-num">05</span>
+        <div>
+          <div class="aplic-nome">Liberação Controlada de Fármacos</div>
+          <p class="aplic-desc">Polímeros biodegradáveis encapsulam fármacos e os liberam em taxas controladas no local exato da ação. Aplicado em oncologia, oftalmologia e doenças crônicas.</p>
+        </div>
+      </div>
+      <div class="aplicacao-item">
+        <span class="aplic-num">06</span>
+        <div>
+          <div class="aplic-nome">Diagnóstico por Imagem</div>
+          <p class="aplic-desc">Nanopartículas de óxido de ferro e pontos quânticos são agentes de contraste para MRI e fluorescência. Permitem identificar tumores antes visíveis apenas em cirurgia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPRIEDADES ESSENCIAIS -->
+<section class="propriedades-bg">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">Propriedades</span>
+      <h2 class="section-title">Requisitos fundamentais</h2>
+    </div>
+  </div>
+  <div class="props-grid">
+    <div class="prop-item">
+      <div class="prop-titulo">Biocompatibilidade</div>
+      <p class="prop-texto">Não deve desencadear resposta imunológica adversa, toxicidade sistêmica ou reação inflamatória crônica. É avaliada em série de testes in vitro e in vivo definidos pela norma ISO 10993.</p>
+    </div>
+    <div class="prop-item">
+      <div class="prop-titulo">Resistência Mecânica</div>
+      <p class="prop-texto">Deve suportar as cargas cíclicas do ambiente biológico — osso, articulação e parede vascular impõem exigências mecânicas muito diferentes entre si e ao longo do tempo.</p>
+    </div>
+    <div class="prop-item">
+      <div class="prop-titulo">Estabilidade Química</div>
+      <p class="prop-texto">O ambiente fisiológico é agressivo: pH variável, enzimas proteolíticas, radicais livres e variações de temperatura. O material deve manter suas propriedades por anos de uso.</p>
+    </div>
+    <div class="prop-item">
+      <div class="prop-titulo">Biofuncionalidade</div>
+      <p class="prop-texto">Além de não causar dano, biomateriais modernos devem ativamente promover respostas celulares desejadas: adesão, proliferação, diferenciação e, quando necessário, apoptose controlada.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DESAFIOS -->
+<section id="desafios">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">Desafios</span>
+      <h2 class="section-title">Os problemas não resolvidos</h2>
+    </div>
+    <div class="desafios-row">
+      <p class="desafios-intro">
+        "Todo material que entra no corpo encontra um sistema imunológico que evoluiu 
+        por milhões de anos para rejeitar o estranho."
+      </p>
+      <ul class="desafios-lista">
+        <li><strong>Resposta do corpo estranho:</strong> macrófagos encapsulam implantes em tecido fibroso, isolando-os e comprometendo sua função. Ainda não existe solução universal para esse fenômeno.</li>
+        <li><strong>Infecção peri-implante:</strong> biofilmes bacterianos em superfícies de implantes são 1.000 vezes mais resistentes a antibióticos. É causa número 1 de falha de implante cirúrgico.</li>
+        <li><strong>Fadiga de longo prazo:</strong> metais sofrem corrosão e polímeros degradam de forma imprevisível ao longo de décadas. Simular 20 anos de carga em laboratório ainda é um problema em aberto.</li>
+        <li><strong>Vascularização de tecidos engineered:</strong> tecidos com mais de 200 µm de espessura necessitam de rede vascular própria. Recriá-la artificialmente é um dos grandes obstáculos da medicina regenerativa.</li>
+        <li><strong>Regulação e translação clínica:</strong> o caminho do laboratório ao paciente leva 10–15 anos e custa centenas de milhões. A maioria dos biomateriais promissores nunca chega ao mercado.</li>
+        <li><strong>Personalização em escala:</strong> cada corpo é diferente. Biomateriais que funcionam estatisticamente podem falhar para subpopulações específicas de pacientes — um desafio de medicina de precisão.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURO -->
+<section id="futuro">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-label">Perspectivas</span>
+      <h2 class="section-title">O que vem a seguir</h2>
+    </div>
+  </div>
+  <div class="futuro-grid">
+    <div class="futuro-item">
+      <h3 class="futuro-titulo">Biomateriais Responsivos</h3>
+      <p class="futuro-texto">
+        Materiais que mudam de propriedades em resposta a estímulos — pH, temperatura, 
+        campo magnético ou luz — permitem "câmpus de liberação" controlados. Hidrogéis 
+        termossensíveis já estão em ensaios clínicos para quimioterapia localizada.
+      </p>
+    </div>
+    <div class="futuro-item">
+      <h3 class="futuro-titulo">Bioimpressão 3D</h3>
+      <p class="futuro-texto">
+        Impressão de estruturas celularizadas camada a camada. Já é possível imprimir 
+        cartilagem auricular, modelos de fígado e construtos vasculares. A impressão 
+        de órgãos funcionais completos permanece um horizonte, mas está se tornando 
+        matematicamente mensurável.
+      </p>
+    </div>
+    <div class="futuro-item">
+      <h3 class="futuro-titulo">Inteligência Artificial no Design</h3>
+      <p class="futuro-texto">
+        Algoritmos de aprendizado de máquina exploram espaços de composição de 
+        materiais inacessíveis à experimentação manual. Modelos generativos já 
+        propuseram ligas metálicas e sequências peptídicas com propriedades superiores 
+        às descobertas por pesquisadores humanos.
+      </p>
+    </div>
+    <div class="futuro-item">
+      <h3 class="futuro-titulo">Órgãos-em-Chip</h3>
+      <p class="futuro-texto">
+        Microplataformas que simulam a fisiologia de órgãos humanos em chips de 
+        polímero transparente. Permitem testar biomateriais e fármacos com precisão 
+        fisiológica, reduzindo a necessidade de modelos animais e acelerando 
+        a validação pré-clínica.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer>
+  <span class="footer-logo">Biomateriais — A Ciência dos Materiais</span>
+  <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+    <span class="footer-copy">Heloisa Helena · Isadora Dinis · Luiza Martins</span>
+    <span class="footer-copy">Conteúdo de referência científica · 2025</span>
+  </div>
+</footer>
+
+</body>
+</html>
